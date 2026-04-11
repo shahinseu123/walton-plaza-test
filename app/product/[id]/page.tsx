@@ -1,4 +1,4 @@
-// app/product/[id]/page.tsx
+// app/product/[id]/page.tsx (Keep your existing structure)
 import { GET_PRODUCT_DETAILS } from "@/graphql/queries/getProductDetails";
 import { fetchGraphQL } from "@/libs/api-client";
 import { ProductTabs } from "@/components/product/ProductTabs";
@@ -90,13 +90,13 @@ export default async function ProductPage({
                         {variant.posItemCode || variant.ebsItemCode}
                       </div>
                       <div className="text-lg font-bold text-gray-900 mt-2">
-                        ${variant.mrpPrice?.toFixed(2)}
+                        ৳{variant.mrpPrice?.toFixed(2)}
                       </div>
                       {variant.discount && (
                         <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded">
                           {variant.discount.type === 'percentage' 
-                            ? `${variant.discount.value}% OFF`
-                            : `$${variant.discount.value} OFF`
+                            ? `${variant.discount.amount}% OFF`
+                            : `৳${variant.discount.amount} OFF`
                           }
                         </div>
                       )}
@@ -127,8 +127,11 @@ export default async function ProductPage({
             </div>
           )}
 
-          {/* Product Actions */}
-          <ProductActions variants={product.variants} />
+          {/* Product Actions - This now has cart functionality */}
+          <ProductActions 
+            product={product}
+            variants={product.variants}
+          />
         </div>
       </div>
 
