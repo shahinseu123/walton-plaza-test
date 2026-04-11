@@ -25,7 +25,7 @@ export function ProductCard({ product }: ProductCardProps) {
           src={primaryImage}
           alt={product.enName}
           fill
-          className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+          className="object-contain transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
         />
         {hasDiscount && (
@@ -36,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-2">
         <div className="mb-1 text-xs font-medium text-gray-400 uppercase tracking-wider">
           Walton
         </div>

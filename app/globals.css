@@ -24,3 +24,84 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 1. The Container */
+.v-slider-wrapper {
+  width: 100%;
+  height: 40px; /* Larger height to accommodate the ripple/thumb */
+  display: flex;
+  align-items: center;
+}
+
+/* 2. The Track */
+.v-slider-track {
+  top: 18px; /* Centers the 4px track in the 40px container */
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Background of the track */
+.v-slider-track.v-slider-track-0, 
+.v-slider-track.v-slider-track-2 {
+  background: rgba(0, 0, 0, 0.12); /* Light grey for inactive track */
+}
+
+/* The active (filled) part of the track */
+.v-slider-track.v-slider-track-1 {
+  background: #1976d2; /* Vuetify Primary Blue */
+}
+
+/* 3. The Thumb */
+.v-slider-thumb {
+  height: 32px; /* Ripple area */
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  top: 4px; /* Centers the 32px thumb in the 40px container */
+}
+
+/* The actual visible circle */
+.v-slider-thumb-surface {
+  height: 12px;
+  width: 12px;
+  background-color: #1976d2;
+  border-radius: 50%;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+/* Hover effect (The "Ripple" look) */
+.v-slider-thumb:hover .v-slider-thumb-surface {
+  transform: scale(1.2);
+}
+
+.v-slider-thumb:hover::before {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: #1976d2;
+  opacity: 0.15;
+  border-radius: 50%;
+}
+
+/* 4. The Label (Tooltip) */
+.v-slider-label {
+  position: absolute;
+  top: -35px;
+  background: #616161;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.v-slider-thumb:hover .v-slider-label {
+  opacity: 1;
+}
