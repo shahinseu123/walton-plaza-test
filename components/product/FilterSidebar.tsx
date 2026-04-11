@@ -1,10 +1,8 @@
 "use client";
 
+import { useDebouncedCallback } from "@/hooks/use-debounce";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import {
-  useCallback,
-  useState,
-} from "react";
+import { useCallback, useState } from "react";
 import ReactSlider from "react-slider";
 
 export const FilterSidebar = () => {
@@ -12,29 +10,29 @@ export const FilterSidebar = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [values, setValues] = useState([0, 100]);
+  const [values, setValues] = useState([0, 10000]);
 
   const minPrice = values[0];
   const maxPrice = values[1];
 
   const createQueryString = useCallback(
-    (name: string, value: string) => {
+    (value: number[]) => {
+      setValues(value)
       const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
-      params.set("skip", "0");
-      return params.toString();
+      params.set("min-price", value[0].toString());
+      params.set("max-price", value[1].toString());
+      router.push(`?${params.toString()}`, { scroll: false });
     },
     [searchParams],
   );
+  const debounced = useDebouncedCallback((val: number[]) => {
+    createQueryString(val)
+  }, 500);
 
   const handleFilter = (name: string, value: string) => {
-    router.push(pathname + "?" + createQueryString(name, value), {
-      scroll: false,
-    });
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name, value);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -49,9 +47,9 @@ export const FilterSidebar = () => {
           trackClassName="v-slider-track"
           // Link the state
           value={values}
-          onChange={(newValues:any) => setValues(newValues)}
+          onChange={(newValues: any) => debounced(newValues)}
           min={0}
-          max={100000}
+          max={10000}
           renderThumb={({ key, ...restProps }, state) => (
             <div key={key} {...restProps}>
               <div className="v-slider-thumb-surface">
@@ -67,7 +65,7 @@ export const FilterSidebar = () => {
           Availability
         </h3>
         <div className="mt-4 space-y-2">
-          {["In Stock", "Out of Stock"].map((status) => (
+          {["in-stock", "out-of-stock"].map((status) => (
             <label
               key={status}
               className="flex items-center gap-3 cursor-pointer group"
@@ -87,8 +85,6 @@ export const FilterSidebar = () => {
           ))}
         </div>
       </div>
-
-     
     </div>
   );
 };

@@ -9,7 +9,10 @@ import { ProductListSkeleton } from "@/components/product/ProductListSkeleton";
 
 export default async function Page() {
   try {
-    const data: any = await fetchGraphQL(GET_PRODUCTS, { skip: 0, limit: 12 });
+    const data: any = await fetchGraphQL(
+      GET_PRODUCTS,
+      { skip: 0, limit: 12 },
+    );
     const products: Product[] = data.getProducts.result.products;
 
     // 2. Handling empty states
