@@ -22,7 +22,6 @@ export function ImageGallery({ images }: { images: any[] }) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Main Image Container */}
       <div
         ref={imageContainerRef}
         className="relative aspect-square w-full border rounded-2xl bg-white overflow-hidden shadow-sm"
@@ -39,7 +38,6 @@ export function ImageGallery({ images }: { images: any[] }) {
           priority
         />
 
-        {/* Zoom Lens */}
         {showZoom && (
           <div
             className="absolute rounded-full border-2 border-white shadow-lg overflow-hidden pointer-events-none z-50"
@@ -59,7 +57,6 @@ export function ImageGallery({ images }: { images: any[] }) {
         )}
       </div>
 
-      {/* Thumbnail Strip */}
       <div className="flex gap-3 overflow-x-auto pb-2">
         {images?.map((img, i) => (
           <button
