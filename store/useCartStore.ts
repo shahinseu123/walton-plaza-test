@@ -5,23 +5,30 @@ import { immer } from 'zustand/middleware/immer';
 import { Product, Variant, CartItem, CartStore } from '@/types';
 import { calculateCartTotals, calculateSellingPrice, getStockStatus } from '@/libs/cart-util';
 
-// Helper to generate unique cart item ID
 const generateCartItemId = (productUid: string, variantCode: string): string => {
   return `${productUid}-${variantCode}`;
 };
 
-// Create the store with persistence and immer for immutable updates
+// React 19: Using Promise for async cart operations
+export const fetchUserCart = async (userId?: string): Promise<CartItem[]> => {
+  // Simulate API call to fetch saved cart from server
+  const stored = localStorage.getItem('walton-cart-storage');
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    return parsed.state?.items || [];
+  }
+  return [];
+};
+
 export const useCartStore = create<CartStore>()(
   persist(
     immer((set, get) => ({
-      // Initial State
       items: [],
       totalItems: 0,
       subtotal: 0,
       totalSavings: 0,
       grandTotal: 0,
 
-      // Actions
       addItem: (product: Product, variant: Variant, quantity: number = 1) => {
         const stockStatus = getStockStatus(variant);
         if (!stockStatus.inStock) return;
@@ -32,7 +39,6 @@ export const useCartStore = create<CartStore>()(
 
         set((state) => {
           if (existingItemIndex >= 0) {
-            // Update existing item
             const existingItem = state.items[existingItemIndex];
             const newQuantity = Math.min(
               existingItem.quantity + quantity,
@@ -40,7 +46,6 @@ export const useCartStore = create<CartStore>()(
             );
             state.items[existingItemIndex].quantity = newQuantity;
           } else {
-            // Add new item
             const newItem: CartItem = {
               id: itemId,
               productUid: product.uid,
@@ -52,7 +57,6 @@ export const useCartStore = create<CartStore>()(
             state.items.push(newItem);
           }
 
-          // Recalculate totals
           const totals = calculateCartTotals(state.items);
           state.totalItems = totals.totalItems;
           state.subtotal = totals.subtotal;
@@ -64,8 +68,6 @@ export const useCartStore = create<CartStore>()(
       removeItem: (id: string) => {
         set((state) => {
           state.items = state.items.filter(item => item.id !== id);
-          
-          // Recalculate totals
           const totals = calculateCartTotals(state.items);
           state.totalItems = totals.totalItems;
           state.subtotal = totals.subtotal;
@@ -85,8 +87,6 @@ export const useCartStore = create<CartStore>()(
           const itemIndex = state.items.findIndex(i => i.id === id);
           if (itemIndex >= 0) {
             state.items[itemIndex].quantity = newQuantity;
-            
-            // Recalculate totals
             const totals = calculateCartTotals(state.items);
             state.totalItems = totals.totalItems;
             state.subtotal = totals.subtotal;
@@ -106,24 +106,19 @@ export const useCartStore = create<CartStore>()(
         });
       },
 
-      getItemCount: () => {
-        return get().totalItems;
-      },
-
-      getItemById: (id: string) => {
-        return get().items.find(item => item.id === id);
-      },
+      getItemCount: () => get().totalItems,
+      getItemById: (id: string) => get().items.find(item => item.id === id),
     })),
     {
-      name: 'walton-cart-storage', // unique name for localStorage
-      storage: createJSONStorage(() => localStorage), // use localStorage
+      name: 'walton-cart-storage',
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         items: state.items,
         totalItems: state.totalItems,
         subtotal: state.subtotal,
         totalSavings: state.totalSavings,
         grandTotal: state.grandTotal,
-      }), // what to persist
+      }),
     }
   )
 );

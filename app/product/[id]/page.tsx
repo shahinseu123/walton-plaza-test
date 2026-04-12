@@ -1,26 +1,23 @@
-// app/product/[id]/page.tsx (Keep your existing structure)
+// app/product/[id]/page.tsx
 import { GET_PRODUCT_DETAILS } from "@/graphql/queries/getProductDetails";
 import { fetchGraphQL } from "@/libs/api-client";
 import { ProductTabs } from "@/components/product/ProductTabs";
 import { PriceSection } from "@/components/product/PriceSection";
 import { ImageGallery } from "@/components/utility/ImageGallery";
 import { ProductActions } from "@/components/product/ProductAction";
+import { calculateSellingPrice, calculateDiscountPercentage, formatPrice } from "@/libs/price-utils";
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const data = await fetchGraphQL(GET_PRODUCT_DETAILS, { uid: id });
   const product = data.getProducts.result.products[0];
 
-  if (!product)
+  if (!product) {
     return <div className="p-20 text-center">Product not found</div>;
+  }
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      {/* Breadcrumbs */}
       <nav className="flex items-center text-sm text-gray-500 mb-8 capitalize">
         <a href="/" className="hover:text-gray-900 transition-colors">Home</a>
         <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,12 +31,9 @@ export default async function ProductPage({
       </nav>
 
       <div className="lg:grid lg:grid-cols-2 lg:gap-12">
-        {/* Left Column - Image Gallery */}
         <ImageGallery images={product.images} />
 
-        {/* Right Column - Product Info */}
         <div className="mt-8 lg:mt-0">
-          {/* Title Section */}
           <div className="border-b border-gray-200 pb-6">
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
               {product.enName}
@@ -58,18 +52,19 @@ export default async function ProductPage({
             <p className="text-sm text-gray-400 mt-2">SKU: {product.uid}</p>
           </div>
 
-          {/* Price Section */}
           <div className="py-6 border-b border-gray-200">
             <PriceSection variant={product.variants?.[0]} />
           </div>
 
-          {/* Variant Selection */}
           {product.variants && product.variants.length > 0 && (
             <div className="py-6 border-b border-gray-200">
               <h3 className="text-sm font-semibold text-gray-900 mb-4">Select Variant</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {product.variants.map((variant: any, idx: number) => {
                   const isInStock = variant.quantity > 0;
+                  const sellingPrice = calculateSellingPrice(variant);
+                  const discountPercent = calculateDiscountPercentage(variant);
+                  
                   return (
                     <button
                       key={idx}
@@ -90,13 +85,13 @@ export default async function ProductPage({
                         {variant.posItemCode || variant.ebsItemCode}
                       </div>
                       <div className="text-lg font-bold text-gray-900 mt-2">
-                        ৳{variant.mrpPrice?.toFixed(2)}
+                        {formatPrice(sellingPrice)}
                       </div>
-                      {variant.discount && (
+                      {discountPercent > 0 && (
                         <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded">
-                          {variant.discount.type === 'percentage' 
-                            ? `${variant.discount.amount}% OFF`
-                            : `৳${variant.discount.amount} OFF`
+                          {variant.discount?.type === 'percentage' 
+                            ? `${discountPercent}% OFF`
+                            : `Save ${formatPrice(variant.discount?.amount)}`
                           }
                         </div>
                       )}
@@ -107,7 +102,6 @@ export default async function ProductPage({
             </div>
           )}
 
-          {/* Key Highlights */}
           {product.priceAndStocks && product.priceAndStocks.length > 0 && (
             <div className="py-6 border-b border-gray-200">
               <h3 className="text-sm font-semibold text-gray-900 mb-4">Key Highlights</h3>
@@ -127,18 +121,11 @@ export default async function ProductPage({
             </div>
           )}
 
-          {/* Product Actions - This now has cart functionality */}
-          <ProductActions 
-            product={product}
-            variants={product.variants}
-          />
+          <ProductActions product={product} variants={product.variants} />
         </div>
       </div>
 
-      {/* Tabs Section */}
-      <section className="mt-16">
-        <ProductTabs product={product} />
-      </section>
+     
     </main>
   );
 }

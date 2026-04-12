@@ -51,7 +51,6 @@ const processedProducts = useMemo(() => {
     return meetsPriceRange && meetsStockStatus;
   });
 
-  // Sort
   if (sortBy === 'price-asc') {
     result.sort((a, b) => getEffectivePrice(a) - getEffectivePrice(b));
   } else if (sortBy === 'price-desc') {

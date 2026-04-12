@@ -4,7 +4,6 @@ import { useState } from "react";
 export function ProductTabs({ product }: { product: any }) {
   const [activeTab, setActiveTab] = useState("specifications");
 
-  // Define which data keys from your API map to which tab
   const tabs = [
     { id: "specifications", label: "Specifications", data: product.productAttributes },
     { id: "details", label: "Detailed Description", data: product.detailedDescriptions },
@@ -13,7 +12,6 @@ export function ProductTabs({ product }: { product: any }) {
 
   return (
     <div className="w-full">
-      {/* Tab Headers */}
       <div className="flex border-b border-gray-200 gap-8">
         {tabs.map((tab) => (
           <button
@@ -30,7 +28,6 @@ export function ProductTabs({ product }: { product: any }) {
         ))}
       </div>
 
-      {/* Tab Content */}
       <div className="py-8">
         {tabs.find((t) => t.id === activeTab)?.data ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">

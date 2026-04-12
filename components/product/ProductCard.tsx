@@ -21,7 +21,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
   const primaryVariant = product.variants?.[0];
   const primaryImage = product.images?.[0]?.url || "/placeholder-product.png";
   
-  // Calculate pricing
   const sellingPrice = primaryVariant ? calculateSellingPrice(primaryVariant) : 0;
   const discountPercent = primaryVariant ? calculateDiscountPercentage(primaryVariant) : 0;
   const stockStatus = primaryVariant ? getStockStatus(primaryVariant) : { 
@@ -74,7 +73,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image Container with Overlay Effects */}
       <Link href={`/product/${product.uid}`} className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
         <Image
           src={primaryImage}
@@ -87,7 +85,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           priority={priority}
         />
         
-        {/* Discount Badge - Redesigned */}
         {hasDiscount && (
           <div className="absolute left-3 top-3 z-10 flex items-center gap-1 rounded-full bg-gradient-to-r from-red-500 to-red-600 px-2.5 py-1 shadow-lg">
             <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,14 +96,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           </div>
         )}
         
-        {/* Stock Status Badge */}
         {!stockStatus.inStock && (
           <div className="absolute right-3 top-3 z-10 rounded-full bg-gray-900/90 backdrop-blur-sm px-2.5 py-1 shadow-lg">
             <span className="text-xs font-bold text-white">Out of Stock</span>
           </div>
         )}
         
-        {/* Wishlist Button - Appears on Hover */}
         <button
           className={`absolute right-3 top-3 z-10 rounded-full bg-white p-2 shadow-md transition-all duration-300 hover:scale-110 ${
             isHovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
@@ -122,7 +117,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           </svg>
         </button>
         
-        {/* Quick View Overlay */}
         <div
           className={`absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
             isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -142,9 +136,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </div>
       </Link>
 
-      {/* Content Section */}
       <div className="flex flex-1 flex-col p-4">
-        {/* Brand/Category */}
         <div className="mb-2 flex items-center gap-2">
           <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
             Walton
@@ -156,14 +148,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           )}
         </div>
         
-        {/* Product Title */}
         <Link href={`/product/${product.uid}`} className="block">
           <h3 className="mb-2 text-sm font-semibold text-gray-800 line-clamp-2 transition-colors hover:text-blue-600">
             {product.enName}
           </h3>
         </Link>
 
-        {/* Rating Section */}
         <div className="mb-3 flex items-center gap-2">
           <div className="flex items-center">
             {[...Array(5)].map((_, i) => (
@@ -181,7 +171,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <span className="text-xs text-gray-500">(128 reviews)</span>
         </div>
 
-        {/* Pricing Section */}
         <div className="mt-auto space-y-2">
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-bold text-gray-900">
@@ -202,7 +191,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-4 flex gap-2">
           <button
             onClick={handleAddToCart}
@@ -234,7 +222,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           </button>
         </div>
         
-        {/* Free Shipping Indicator */}
         <div className="mt-3 flex items-center justify-center gap-1 text-xs text-green-600">
           <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -243,7 +230,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         </div>
       </div>
       
-      {/* Animated Border on Hover */}
       <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 ${
         isHovered ? "opacity-100" : "opacity-0"
       }`} />

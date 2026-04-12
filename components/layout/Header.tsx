@@ -21,7 +21,6 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
-      {/* Top Bar - Subtle info */}
       <div className="hidden bg-gray-900 py-2 text-center text-xs font-medium text-white md:block">
         Free Shipping on orders over ৳50,000 | 
         <span className="ml-2 text-blue-400 cursor-pointer hover:underline">
@@ -29,7 +28,6 @@ export function Header() {
         </span>
       </div>
 
-      {/* Mobile Search Bar */}
       {isSearchOpen && (
         <div className="md:hidden p-4 bg-white border-b border-gray-100">
           <div className="relative">
@@ -53,14 +51,12 @@ export function Header() {
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           
-          {/* 1. Logo */}
           <div className="flex shrink-0">
             <Link href="/" className="text-2xl font-black tracking-tighter text-gray-900">
               WALTON<span className="text-blue-600">PLAZA</span>
             </Link>
           </div>
 
-          {/* 2. Desktop Navigation */}
           <div className="hidden lg:flex lg:gap-x-6">
             {categories.slice(0, 4).map((item) => (
               <Link 
@@ -89,7 +85,6 @@ export function Header() {
             </div>
           </div>
 
-          {/* 3. Search Bar - Desktop */}
           <div className="hidden flex-1 max-w-md md:block">
             <div className="relative">
               <input
@@ -101,9 +96,7 @@ export function Header() {
             </div>
           </div>
 
-          {/* 4. Action Icons */}
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Mobile Search Button */}
             <button 
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="rounded-full p-2 text-gray-600 hover:bg-gray-100 md:hidden"
@@ -111,7 +104,6 @@ export function Header() {
               <Search className="h-5 w-5" />
             </button>
             
-            {/* Account Link */}
             <Link 
               href="/account" 
               className="rounded-full p-2 text-gray-600 hover:bg-gray-100 transition-colors"
@@ -120,7 +112,6 @@ export function Header() {
               <User className="h-5 w-5 sm:h-6 sm:w-6" />
             </Link>
 
-            {/* Cart Link with Zustand Integration */}
             <Link 
               href="/cart" 
               className="relative rounded-full p-2 text-gray-600 hover:bg-gray-100 transition-colors group"
@@ -128,13 +119,11 @@ export function Header() {
             >
               <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
               
-              {/* Cart Badge - Connected to Zustand */}
               {totalItems > 0 && (
                 <>
                   <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-red-500 text-[9px] sm:text-[10px] font-bold text-white ring-2 ring-white">
                     {totalItems > 9 ? "9+" : totalItems}
                   </span>
-                  {/* Pulsing animation for new items */}
                   <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-red-500 animate-ping opacity-75">
                     {totalItems > 9 ? "9+" : totalItems}
                   </span>
@@ -142,7 +131,6 @@ export function Header() {
               )}
             </Link>
 
-            {/* Mobile Menu Button */}
             <button 
               className="rounded-full p-2 text-gray-600 hover:bg-gray-100 lg:hidden transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -153,7 +141,6 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="lg:hidden py-4 border-t border-gray-100">
             <div className="space-y-2">

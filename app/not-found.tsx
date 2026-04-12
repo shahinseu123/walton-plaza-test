@@ -1,27 +1,16 @@
 import Link from "next/link";
-import Image from "next/image";
-import ImageNotFound from "../image/404.png"
-import { Search, Home, ArrowLeft, ArrowRight, CornerDownRight } from "lucide-react";
+import {
+  Search,
+  Home,
+  ArrowRight,
+} from "lucide-react";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-[90vh] flex-col bg-white">
-      {/* 1. Subtle, Professional Top-Bar for branding (if not in Layout) */}
-      {/* <div className="border-b border-gray-100 py-3">
-        <div className="mx-auto max-w-7xl px-4 text-left">
-          <Link href="/" className="text-xl font-black tracking-tighter text-gray-900">
-            WALTON<span className="text-blue-600">PLAZA</span>
-          </Link>
-        </div>
-      </div> 
-      */}
-
-      {/* 2. Main 404 Hero Section */}
       <main className="flex-1 flex items-center">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 text-center md:text-left">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
-            
-            {/* 3. Left Side: Large Text & Info */}
             <div>
               <div className="mb-3 flex items-center justify-center md:justify-start gap-3">
                 <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
@@ -29,19 +18,18 @@ export default function NotFound() {
                 </span>
                 <span className="text-3xl">😕</span>
               </div>
-              
+
               <h1 className="mb-6 text-4xl font-extrabold tracking-tighter text-gray-950 sm:text-5xl md:text-6xl lg:text-7xl">
                 Whoops! That page is currently unavailable.
               </h1>
-              
+
               <p className="mb-10 max-w-xl mx-auto md:mx-0 text-xl text-gray-600">
-                It seems like the link you followed might be broken, or the item has been removed from our catalog. Let’s get you back on track to find the right appliance for your home.
+                It seems like the link you followed might be broken, or the item
+                has been removed from our catalog. Let’s get you back on track
+                to find the right appliance for your home.
               </p>
 
-              {/* 4. Help Actions */}
               <div className="space-y-6">
-                
-                {/* Search - High Utility */}
                 <div className="relative max-w-lg mx-auto md:mx-0">
                   <input
                     type="text"
@@ -71,12 +59,8 @@ export default function NotFound() {
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
-
               </div>
             </div>
-
-            
-            
           </div>
         </div>
       </main>

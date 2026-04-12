@@ -25,12 +25,10 @@ export const ProductHero = ({ product }: { product: any }) => {
         )}
       </div>
 
-      {/* Stock Status */}
       <p className={`font-medium ${selectedVariant.quantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
         {selectedVariant.quantity > 0 ? `In Stock (${selectedVariant.quantity} units)` : 'Out of Stock'}
       </p>
 
-      {/* Buy Button */}
       <button 
         disabled={selectedVariant.quantity === 0}
         className="w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-black transition-all disabled:bg-gray-300"

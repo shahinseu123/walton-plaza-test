@@ -45,7 +45,6 @@ export const FilterSidebar = () => {
           className="v-slider-wrapper"
           thumbClassName="v-slider-thumb"
           trackClassName="v-slider-track"
-          // Link the state
           value={values}
           onChange={(newValues: any) => debounced(newValues)}
           min={0}

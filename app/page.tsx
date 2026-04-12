@@ -15,7 +15,6 @@ export default async function Page() {
     );
     const products: Product[] = data.getProducts.result.products;
 
-    // 2. Handling empty states
     if (!products || products.length === 0) {
       return (
         <div className="flex justify-center items-center h-64">
@@ -42,7 +41,6 @@ export default async function Page() {
       </main>
     );
   } catch (error) {
-    // If this throws, Next.js will automatically show your error.tsx
     console.error("Critical error fetching products:", error);
     throw error;
   }

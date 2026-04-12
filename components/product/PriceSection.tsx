@@ -1,62 +1,49 @@
-// components/product/PriceSection.tsx
 "use client";
+
 import { Variant } from "@/types";
+import { calculateSellingPrice, calculateDiscountAmount, calculateDiscountPercentage, formatPrice } from "@/libs/price-utils";
 
 interface PriceSectionProps {
-  variant: Variant | null;
+  variant: Variant | null | undefined;
 }
 
 export function PriceSection({ variant }: PriceSectionProps) {
-  const getEffectivePrice = (): number => {
-    if (!variant) return 0;
-    const { mrpPrice, discount } = variant;
-    if (!discount) return mrpPrice;
-    if (discount.type === "percentage") {
-      return mrpPrice - (mrpPrice * discount.value / 100);
-    }
-    return mrpPrice - discount.value;
-  };
+  if (!variant) {
+    return <div className="text-2xl font-bold text-gray-900">Price unavailable</div>;
+  }
 
-  const getDiscountPercentage = (): number => {
-    if (!variant?.discount || variant.discount.type !== "percentage") return 0;
-    return variant.discount.value;
-  };
-
-  const currentPrice = getEffectivePrice();
-  const originalPrice = variant?.mrpPrice || 0;
-  const discountPercent = getDiscountPercentage();
-  const savings = originalPrice - currentPrice;
+  const sellingPrice = calculateSellingPrice(variant);
+  const originalPrice = variant.mrpPrice;
+  const discountPercent = calculateDiscountPercentage(variant);
+  const discountAmount = calculateDiscountAmount(variant);
+  const hasDiscount = discountPercent > 0 && discountAmount > 0;
 
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline gap-3">
+      <div className="flex items-baseline gap-3 flex-wrap">
         <span className="text-4xl font-bold text-gray-900">
-          ${currentPrice.toFixed(2)}
+          {formatPrice(sellingPrice)}
         </span>
-        {discountPercent > 0 && (
+        
+        {hasDiscount && (
           <>
             <span className="text-lg text-gray-400 line-through">
-              ${originalPrice.toFixed(2)}
+              {formatPrice(originalPrice)}
             </span>
             <span className="bg-red-100 text-red-700 px-2 py-1 rounded-lg text-sm font-semibold">
-              -{discountPercent}%
+              -{discountPercent}% OFF
             </span>
           </>
         )}
       </div>
-      {savings > 0 && (
-        <div className="text-green-600 text-sm font-medium">
-          You save ${savings.toFixed(2)} ({discountPercent}% OFF)
-        </div>
+      
+      {hasDiscount && (
+        <p className="text-green-600 text-sm font-medium">
+          You save {formatPrice(discountAmount)} ({discountPercent}% OFF)
+        </p>
       )}
-      {variant?.discount?.type === "flat" && (
-        <div className="text-green-600 text-sm font-medium">
-          Flat ${variant.discount.value} OFF
-        </div>
-      )}
-      <div className="text-sm text-gray-500">
-        Inclusive of all taxes
-      </div>
+      
+      <p className="text-sm text-gray-500">Inclusive of all taxes</p>
     </div>
   );
 }
