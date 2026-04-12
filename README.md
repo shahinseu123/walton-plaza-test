@@ -112,3 +112,18 @@ const useCartStore = create((set) => ({
     items: [...state.items, item] 
   }))
 }));
+
+const [optimisticCart, addOptimistic] = useOptimistic(cart, reducer);
+
+const addToCart = (item) => {
+  addOptimistic({ type: 'add', item }); // Instant update
+  await actualAddToCart(item); // Background sync
+};
+
+// Server Component - Critical
+const product = await fetchProduct(id);
+
+// Client Component - Non-critical
+<Suspense fallback={<Skeleton />}>
+  <ProductReviews productId={id} />
+</Suspense>
