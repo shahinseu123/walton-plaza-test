@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { Product } from "@/types";
 import { ProductCard } from "./ProductCard";
 import { useState } from "react";
-import { fetchGraphQL } from "@/libs/api-client";
+import { fetchGraphQL } from "@/lib/api-client";
 import { GET_PRODUCTS } from "@/graphql/queries/getProducts";
 
 export function ProductCardList({

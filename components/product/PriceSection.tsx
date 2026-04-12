@@ -1,7 +1,7 @@
 "use client";
 
 import { Variant } from "@/types";
-import { calculateSellingPrice, calculateDiscountAmount, calculateDiscountPercentage, formatPrice } from "@/libs/price-utils";
+import { calculateSellingPrice, calculateDiscountAmount, calculateDiscountPercentage, formatPrice } from "@/lib/price-utils";
 
 interface PriceSectionProps {
   variant: Variant | null | undefined;

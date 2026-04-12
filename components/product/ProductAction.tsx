@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { Product, Variant } from "@/types";
 import { useCartStore } from "@/store/useCartStore";
-import { calculateSellingPrice, formatPrice, getStockStatus } from "@/libs/price-utils";
+import { calculateSellingPrice, formatPrice, getStockStatus } from "@/lib/price-utils";
 import { toast } from "sonner";
 import { Minus, Plus, ShoppingCart, Heart, Bolt } from "lucide-react";
 

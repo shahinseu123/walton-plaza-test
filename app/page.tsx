@@ -1,4 +1,4 @@
-import { fetchGraphQL } from "../libs/api-client";
+import { fetchGraphQL } from "../lib/api-client";
 import { GET_PRODUCTS } from "@/graphql/queries/getProducts";
 import { Product } from "@/types";
 import { ProductCardList } from "@/components/product/ProductCardList";

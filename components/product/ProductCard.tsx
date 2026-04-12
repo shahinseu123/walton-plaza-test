@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { Product } from "@/types";
 import { useCartStore } from "@/store/useCartStore";
-import { calculateSellingPrice, calculateDiscountPercentage, getStockStatus } from "@/libs/cart-util";
+import { calculateSellingPrice, calculateDiscountPercentage, getStockStatus } from "@/lib/cart-utils";
 import { toast } from "sonner";
 
 interface ProductCardProps {

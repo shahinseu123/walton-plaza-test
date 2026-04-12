@@ -6,7 +6,7 @@ export async function fetchGraphQL<T>(query: string, variables = {}): Promise<T>
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query, variables }),
-    next: { revalidate: 3600 }, // Cache for performance
+    next: { revalidate: 3600 }, 
   });
 
   const json = await response.json();

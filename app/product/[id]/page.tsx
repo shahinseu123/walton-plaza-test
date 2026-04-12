@@ -1,11 +1,10 @@
 // app/product/[id]/page.tsx
 import { GET_PRODUCT_DETAILS } from "@/graphql/queries/getProductDetails";
-import { fetchGraphQL } from "@/libs/api-client";
-import { ProductTabs } from "@/components/product/ProductTabs";
+import { fetchGraphQL } from "@/lib/api-client";
 import { PriceSection } from "@/components/product/PriceSection";
 import { ImageGallery } from "@/components/utility/ImageGallery";
 import { ProductActions } from "@/components/product/ProductAction";
-import { calculateSellingPrice, calculateDiscountPercentage, formatPrice } from "@/libs/price-utils";
+import { calculateSellingPrice, calculateDiscountPercentage, formatPrice } from "@/lib/price-utils";
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
