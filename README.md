@@ -28,7 +28,7 @@ This project is a complete e-commerce solution for Walton Plaza, featuring:
 - **Product Details Page (PDP)** with image gallery and variant selection
 - **Shopping Cart** with optimistic updates and local persistence
 - **Stock-aware Add to Cart** functionality
-- **Responsive Design** for all devices
+- **Not Responsive Design** for all devices
 - **Filtering & Sorting** (price, category, availability)
 - **Dynamic Pricing** with discount calculations
 
