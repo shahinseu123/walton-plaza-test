@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+cat > README.md << 'EOF'
+# Walton Plaza - E-commerce Platform
 
-## Getting Started
+A modern, high-performance e-commerce platform built with **Next.js 15**, **React 19**, **TypeScript**, **Tailwind CSS**, and **GraphQL**. This project demonstrates advanced frontend engineering practices including server/client component architecture, optimistic UI updates, and efficient state management.
 
-First, run the development server:
+## 📋 Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Key Features](#key-features)
+- [Architecture Decisions](#architecture-decisions)
+- [Performance Optimizations](#performance-optimizations)
+- [State Management](#state-management)
+- [GraphQL Implementation](#graphql-implementation)
+- [Styling Approach](#styling-approach)
+- [Trade-offs](#trade-offs)
+- [Getting Started](#getting-started)
+- [Deployment](#deployment)
+- [Evaluation Criteria](#evaluation-criteria)
+- [Future Improvements](#future-improvements)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project is a complete e-commerce solution for Walton Plaza, featuring:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Product Listing Page (PLP)** with infinite scroll/pagination
+- **Product Details Page (PDP)** with image gallery and variant selection
+- **Shopping Cart** with optimistic updates and local persistence
+- **Stock-aware Add to Cart** functionality
+- **Responsive Design** for all devices
+- **Filtering & Sorting** (price, category, availability)
+- **Dynamic Pricing** with discount calculations
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+| Category | Technology | Version | Purpose |
+|----------|-----------|---------|---------|
+| Framework | Next.js | 15.x | App Router, SSR, SSG |
+| UI Library | React | 19.2.4 | Server/Client Components |
+| Language | TypeScript | 5.x | Type safety (strict mode) |
+| Styling | Tailwind CSS | 3.x | Utility-first CSS |
+| State Management | Zustand | 4.5.x | Global state + persistence |
+| API Layer | GraphQL | - | Data fetching |
+| Icons | Lucide React | - | Icon library |
+| Notifications | Sonner | 1.4.x | Toast notifications |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+walton-plaza/
+├── app/ # Next.js App Router
+│ ├── product/ # Product routes
+│ │ ├── [id]/ # Dynamic product page
+│ │ │ ├── page.tsx # Product details (Server)
+│ │ │ ├── loading.tsx # Loading spinner
+│ │ │ └── ProductDetailsClient.tsx
+│ │ └── page.tsx # Product listing
+│ ├── cart/ # Cart page
+│ │ └── page.tsx
+│ ├── layout.tsx # Root layout
+│ └── globals.css # Global styles
+│
+├── components/ # Reusable components
+│ ├── product/ # Product-specific
+│ │ ├── ProductCard.tsx
+│ │ ├── ProductActions.tsx
+│ │ ├── PriceSection.tsx
+│ │ ├── ProductTabs.tsx
+│ │ └── VariantSelector.tsx
+│ ├── cart/ # Cart components
+│ │ ├── CartDrawer.tsx
+│ │ ├── CartItemsList.tsx
+│ │ ├── CartItemCard.tsx
+│ │ ├── OrderSummary.tsx
+│ │ └── PromoCodeForm.tsx
+│ └── ui/ # Generic UI
+│ ├── Breadcrumbs.tsx
+│ └── RatingStars.tsx
+│
+├── store/ # Zustand stores
+│ └── useCartStore.ts # Cart state management
+│
+├── libs/ # Utilities
+│ ├── api-client.ts # GraphQL client
+│ ├── price-utils.ts # Price calculations
+│ └── cart-utils.ts # Cart helpers
+│
+├── graphql/ # GraphQL
+│ ├── queries/ # GraphQL queries
+│ │ ├── getProducts.ts
+│ │ └── getProductDetails.ts
+│ |
+│ └── productFragments.ts
+│
+├── hooks/ # Custom React hooks
+│ └── useProducts.ts # Products fetching logic
+│
+├── types/ # TypeScript types
+│ ├── product.ts
+│ └── cart.ts
+│
+|
+└── images/ # Placeholder images
