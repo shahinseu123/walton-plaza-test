@@ -49,57 +49,66 @@ This project is a complete e-commerce solution for Walton Plaza, featuring:
 
 
 
-walton-plaza/
-├── app/ # Next.js App Router
-│ ├── product/ # Product routes
-│ │ ├── [id]/ # Dynamic product page
-│ │ │ ├── page.tsx # Product details (Server)
-│ │ │ ├── loading.tsx # Loading spinner
-│ │ │ └── ProductDetailsClient.tsx
-│ │ └── page.tsx # Product listing
-│ ├── cart/ # Cart page
-│ │ └── page.tsx
-│ ├── layout.tsx # Root layout
-│ └── globals.css # Global styles
-│
-├── components/ # Reusable components
-│ ├── product/ # Product-specific
-│ │ ├── ProductCard.tsx
-│ │ ├── ProductActions.tsx
-│ │ ├── PriceSection.tsx
-│ │ ├── ProductTabs.tsx
-│ │ └── VariantSelector.tsx
-│ ├── cart/ # Cart components
-│ │ ├── CartDrawer.tsx
-│ │ ├── CartItemsList.tsx
-│ │ ├── CartItemCard.tsx
-│ │ ├── OrderSummary.tsx
-│ │ └── PromoCodeForm.tsx
-│ └── ui/ # Generic UI
-│ ├── Breadcrumbs.tsx
-│ └── RatingStars.tsx
-│
-├── store/ # Zustand stores
-│ └── useCartStore.ts # Cart state management
-│
-├── libs/ # Utilities
-│ ├── api-client.ts # GraphQL client
-│ ├── price-utils.ts # Price calculations
-│ └── cart-utils.ts # Cart helpers
-│
-├── graphql/ # GraphQL
-│ ├── queries/ # GraphQL queries
-│ │ ├── getProducts.ts
-│ │ └── getProductDetails.ts
-│ |
-│ └── productFragments.ts
-│
-├── hooks/ # Custom React hooks
-│ └── useProducts.ts # Products fetching logic
-│
-├── types/ # TypeScript types
-│ ├── product.ts
-│ └── cart.ts
-│
-|
-└── images/ # Placeholder images
+
+## Key Features
+
+### Product Listing Page (PLP)
+- ✅ Fetch products via GraphQL
+- ✅ Pagination / Infinite scroll (Load More button)
+- ✅ Loading skeleton & error handling
+- ✅ Filters (price range, availability)
+- ✅ Sorting (price: low-to-high, high-to-low)
+
+### Product Card
+- ✅ Reusable ProductCard component
+- ✅ Optimized images with next/image
+- ✅ Hover micro-interactions
+- ✅ Optimistic add to cart
+
+### Product Details Page (PDP)
+- ✅ Dynamic routing (product/[id])
+- ✅ Fetch product details
+- ✅ Image gallery with zoom
+- ✅ Variant selection
+- ✅ Stock-aware CTA
+- ✅ Dynamic pricing with discount display
+
+### Cart System
+- ✅ Add/remove/update items
+- ✅ State persistence (localStorage)
+- ✅ Optimistic updates with React 19
+- ✅ Real-time price calculations
+
+## Architecture Decisions
+
+### 1. Next.js App Router with React 19
+
+**Decision:** Use Next.js App Router with React 19 Server Components
+
+**Why:**
+- Server Components reduce client-side JavaScript bundle size
+- Built-in SEO optimization with server-side rendering
+- Streaming SSR with Suspense for progressive loading
+- Access to React 19 features (`use`, `useOptimistic`, `useTransition`)
+
+**Trade-off:** More complex data fetching patterns compared to Pages Router
+
+### 2. Zustand for State Management
+
+**Decision:** Use Zustand instead of Redux or Context API
+
+**Why:**
+- Minimal boilerplate code (60% less than Redux)
+- Built-in persistence middleware for localStorage
+- Selective re-renders with selector pattern
+- Small bundle size (~1KB)
+- Excellent TypeScript support
+
+**Example:**
+```typescript
+const useCartStore = create((set) => ({
+  items: [],
+  addItem: (item) => set((state) => ({ 
+    items: [...state.items, item] 
+  }))
+}));
