@@ -1,129 +1,319 @@
-cat > README.md << 'EOF'
-# Walton Plaza - E-commerce Platform
+# Walton Plaza – Senior Frontend Developer Evaluation Task
 
-A modern, high-performance e-commerce platform built with **Next.js 15**, **React 19**, **TypeScript**, **Tailwind CSS**, and **GraphQL**. This project demonstrates advanced frontend engineering practices including server/client component architecture, optimistic UI updates, and efficient state management.
+A high-performance product listing and product detail system built with **Next.js (App Router), React 19, TypeScript, Tailwind CSS, and GraphQL**.
 
-## 📋 Table of Contents
+The project focuses on **scalable frontend architecture, performance optimization, and modern React/Next.js patterns**.
 
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Key Features](#key-features)
-- [Architecture Decisions](#architecture-decisions)
-- [Performance Optimizations](#performance-optimizations)
-- [State Management](#state-management)
-- [GraphQL Implementation](#graphql-implementation)
-- [Styling Approach](#styling-approach)
-- [Trade-offs](#trade-offs)
-- [Getting Started](#getting-started)
-- [Deployment](#deployment)
-- [Evaluation Criteria](#evaluation-criteria)
-- [Future Improvements](#future-improvements)
+---
 
-## Overview
+# 🚀 Tech Stack
 
-This project is a complete e-commerce solution for Walton Plaza, featuring:
+- Next.js (App Router)
+- React 19
+- TypeScript (strict mode)
+- Tailwind CSS
+- GraphQL (Custom Client)
+- Native Fetch API
 
-- **Product Listing Page (PLP)** with infinite scroll/pagination
-- **Product Details Page (PDP)** with image gallery and variant selection
-- **Shopping Cart** with optimistic updates and local persistence
-- **Stock-aware Add to Cart** functionality
-- **Not Responsive Design** for all devices
-- **Filtering & Sorting** (price, category, availability)
-- **Dynamic Pricing** with discount calculations
+---
 
-## Tech Stack
+# 🧠 Architecture Overview
 
-| Category | Technology | Version | Purpose |
-|----------|-----------|---------|---------|
-| Framework | Next.js | 15.x | App Router, SSR, SSG |
-| UI Library | React | 19.2.4 | Server/Client Components |
-| Language | TypeScript | 5.x | Type safety (strict mode) |
-| Styling | Tailwind CSS | 3.x | Utility-first CSS |
-| State Management | Zustand | 4.5.x | Global state + persistence |
-| API Layer | GraphQL | - | Data fetching |
-| Icons | Lucide React | - | Icon library |
-| Notifications | Sonner | 1.4.x | Toast notifications |
+The application follows a **feature-based, server-first architecture** using Next.js App Router.
 
-## Project Structure
+### Core Principles
+
+- Server Components for data fetching and SEO
+- Client Components for interactivity only
+- Minimal client-side JavaScript
+- Strict TypeScript enforcement
+- Explicit data flow (no hidden abstractions)
+
+---
+
+# 📁 Project Structure
+
+# 📁 Project Structure
+
+```txt
+src/
+│
+├── app/                      # App Router routes (Next.js)
+│   ├── products/             # Product Listing Page (PLP)
+│   ├── product/[id]/        # Product Details Page (PDP)
+│   ├── layout.tsx
+│   ├── page.tsx
+│
+├── components/
+│   ├── product/              # Product-related UI components
+│   ├── ui/                   # Reusable reusable UI components
+│
+├── lib/
+│   ├── graphql/              # GraphQL client utilities
+│   ├── fetchGraphQL.ts       # Custom GraphQL fetch wrapper
+│
+├── store/                    # Cart state management
+├── hooks/                    # Custom React hooks
+├── types/                    # Global TypeScript types
+├── config/                   # Environment-based configuration
+
+---
+
+# 🔌 GraphQL Strategy
+
+## Custom GraphQL Client (No Apollo)
+
+Instead of Apollo Client, a **custom lightweight GraphQL fetch layer** is implemented.
+
+### Why not Apollo?
+
+### 1. Server Components Compatibility
+Next.js App Router relies heavily on Server Components.
+
+Apollo introduces:
+- Client-side cache dependency
+- Provider wrapper requirement
+- Hydration complexity
+
+✔ Custom fetch works natively in:
+- Server Components
+- Server Actions
+- Client Components
+
+---
+
+### 2. Performance Benefits
+
+Custom GraphQL approach:
+
+- Uses native `fetch`
+- No runtime abstraction overhead
+- Smaller bundle size
+- Better tree-shaking
+- No cache normalization cost
+
+---
+
+### 3. Better Alignment with Next.js
+
+Next.js already provides:
+- Request caching
+- Revalidation strategies
+- Streaming support
+
+So Apollo cache becomes redundant.
+
+---
+
+### 4. Simplicity & Predictability
+
+GraphQL requests are explicit:
+
+```ts
+fetchGraphQL(query, variables)
+```
+
+No hidden caching layers or side effects.
+
+---
+
+# 🛍 Product Listing Page (PLP)
+
+## Features
+
+- GraphQL product fetching
+- Pagination-based loading
+- Filtering:
+  - Category
+  - Price range
+  - Availability
+- Sorting:
+  - Price (asc/desc)
+  - Rating
+
+## Why Pagination (not Infinite Scroll)?
+
+- Better SEO performance
+- Stable memory usage
+- Easier caching strategy
+- Predictable server load
+
+---
+
+# 🧱 Product Card Component
+
+## Features
+
+- Optimized image rendering (`next/image`)
+- Hover micro-interactions
+- Memoized rendering
+- Stock indicator
+- Reusable across PLP and recommendations
+
+## Optimistic Cart Behavior
+
+- UI updates instantly on "Add to Cart"
+- Rollback supported on failure
+
+---
+
+# 📄 Product Details Page (PDP)
+
+## Features
+
+- Dynamic route: `/product/[id]`
+- Server-side GraphQL fetch
+- Image gallery
+- Variant selection (size/color)
+- Stock-aware CTA
+- Dynamic pricing per variant
+
+---
+
+# 🧠 State Management (Cart)
+
+## Approach
+
+A lightweight global store is used instead of Redux.
+
+- Client-side state only
+- Persistent via `localStorage`
+- Hydration-safe initialization
+
+---
+
+## Why not Redux?
+
+- Overkill for current scope
+- Adds unnecessary boilerplate
+- Increases bundle complexity
+
+✔ Chosen approach:
+- simpler
+- faster
+- easier to maintain
+
+---
 
 
 
+# ⚡ Performance Optimizations
 
-## Key Features
+## 1. Server Components First
 
-### Product Listing Page (PLP)
-- ✅ Fetch products via GraphQL
-- ✅ Pagination / Infinite scroll (Load More button)
-- ✅ Loading skeleton & error handling
-- ✅ Filters (price range, availability)
-- ✅ Sorting (price: low-to-high, high-to-low)
+- Product data fetched on server
+- Reduced client JS bundle
 
-### Product Card
-- ✅ Reusable ProductCard component
-- ✅ Optimized images with next/image
-- ✅ Hover micro-interactions
-- ✅ Optimistic add to cart
+---
 
-### Product Details Page (PDP)
-- ✅ Dynamic routing (product/[id])
-- ✅ Fetch product details
-- ✅ Image gallery with zoom
-- ✅ Variant selection
-- ✅ Stock-aware CTA
-- ✅ Dynamic pricing with discount display
+## 2. Memoization Strategy
 
-### Cart System
-- ✅ Add/remove/update items
-- ✅ State persistence (localStorage)
-- ✅ Optimistic updates with React 19
-- ✅ Real-time price calculations
+- `React.memo` for ProductCard
+- `useMemo` for derived filters
+- `useCallback` for event handlers
 
-## Architecture Decisions
+---
 
-### 1. Next.js App Router with React 19
+## 3. GraphQL Optimization
 
-**Decision:** Use Next.js App Router with React 19 Server Components
+- Only required fields requested
+- Query co-location per route
+- No over-fetching
 
-**Why:**
-- Server Components reduce client-side JavaScript bundle size
-- Built-in SEO optimization with server-side rendering
-- Streaming SSR with Suspense for progressive loading
-- Access to React 19 features (`use`, `useOptimistic`, `useTransition`)
+---
 
-**Trade-off:** More complex data fetching patterns compared to Pages Router
+## 4. Image Optimization
 
-### 2. Zustand for State Management
+- Next.js Image component
+- Lazy loading enabled
+- Responsive image sizes
 
-**Decision:** Use Zustand instead of Redux or Context API
+---
 
-**Why:**
-- Minimal boilerplate code (60% less than Redux)
-- Built-in persistence middleware for localStorage
-- Selective re-renders with selector pattern
-- Small bundle size (~1KB)
-- Excellent TypeScript support
+# ⚛ React 19 Features Used
 
-**Example:**
-```typescript
-const useCartStore = create((set) => ({
-  items: [],
-  addItem: (item) => set((state) => ({ 
-    items: [...state.items, item] 
-  }))
-}));
+- Concurrent rendering compatibility
+- Suspense-based loading UI
+- Server Actions (for mutations where applicable)
+- Future-ready component structure (React Compiler aligned patterns)
 
-const [optimisticCart, addOptimistic] = useOptimistic(cart, reducer);
+---
 
-const addToCart = (item) => {
-  addOptimistic({ type: 'add', item }); // Instant update
-  await actualAddToCart(item); // Background sync
-};
+# 🔥 Key Architecture Decisions
 
-// Server Component - Critical
-const product = await fetchProduct(id);
+| Area | Decision | Reason |
+|------|----------|--------|
+| GraphQL Client | Custom fetch wrapper | Better Server Component support |
+| State Management | Lightweight store | Avoid Redux complexity |
+| Data Fetching | Server Components | Performance + SEO |
+| Pagination | Page-based | Stable performance + SEO |
+| Styling | Tailwind CSS | Rapid UI development |
 
-// Client Component - Non-critical
-<Suspense fallback={<Skeleton />}>
-  <ProductReviews productId={id} />
-</Suspense>
+---
+
+# ⚖ Trade-offs
+
+## Custom GraphQL Client
+
+### ❌ Cons
+- No built-in cache like Apollo
+- Manual optimization required
+
+### ✔ Pros
+- Fully compatible with Server Components
+- Smaller bundle size
+- Full control over caching strategy
+
+---
+
+## No Redux
+
+### ❌ Cons
+- Less structured for large-scale global state
+
+### ✔ Pros
+- Simpler architecture
+- Less boilerplate
+- Faster development speed
+
+---
+
+## Pagination over Infinite Scroll
+
+### ❌ Cons
+- Slightly less smooth UX
+
+### ✔ Pros
+- Better SEO
+- More predictable performance
+- Easier debugging
+
+---
+
+# 🚀 Future Improvements
+
+- Introduce persisted GraphQL caching layer
+- Add Redis edge caching for PLP
+- Move cart to server-synced state
+- Add analytics-driven product ranking
+- Implement A/B testing for sorting strategies
+
+---
+
+# 📦 Repository
+
+> Add GitHub link here
+
+---
+
+# 📌 Summary
+
+This project prioritizes:
+
+- Performance-first architecture
+- Minimal client-side JavaScript
+- Explicit data handling
+- Scalable component structure
+- Next.js App Router best practices
+```
+
