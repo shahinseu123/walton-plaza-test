@@ -122,12 +122,10 @@ No hidden caching layers or side effects.
 - GraphQL product fetching
 - Pagination-based loading
 - Filtering:
-  - Category
   - Price range
   - Availability
 - Sorting:
   - Price (asc/desc)
-  - Rating
 
 ## Why Pagination (not Infinite Scroll)?
 
