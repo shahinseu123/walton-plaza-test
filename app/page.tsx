@@ -1,5 +1,5 @@
-import { fetchGraphQL } from "../lib/api-client";
-import { GET_PRODUCTS } from "@/graphql/queries/getProducts";
+import { apolloClient } from "@/lib/apollo/client";
+import { GET_PRODUCTS } from "@/graphql/queries/get-products";
 import { Product } from "@/types";
 import { ProductCardList } from "@/components/product/ProductCardList";
 import { FilterSidebar } from "@/components/product/FilterSidebar";
@@ -9,10 +9,16 @@ import { ProductListSkeleton } from "@/components/product/ProductListSkeleton";
 
 export default async function Page() {
   try {
-    const data: any = await fetchGraphQL(
-      GET_PRODUCTS,
-      { skip: 0, limit: 12 },
-    );
+    const { data } = await apolloClient.query({
+      query: GET_PRODUCTS,
+      variables: { skip: 0, limit: 12 },
+      context: {
+        fetchOptions: {
+          next: { revalidate: 60 }, // Optional: ISR cache revalidation
+        },
+      },
+    });
+    
     const products: Product[] = data.getProducts.result.products;
 
     if (!products || products.length === 0) {

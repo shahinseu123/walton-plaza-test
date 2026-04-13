@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  Search,
-  Home,
-  ArrowRight,
-} from "lucide-react";
+import { Search, Home, ArrowRight } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -42,7 +38,6 @@ export default function NotFound() {
                   </button>
                 </div>
 
-                {/* Primary Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4">
                   <Link
                     href="/"

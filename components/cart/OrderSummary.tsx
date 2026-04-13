@@ -1,4 +1,3 @@
-// components/cart/OrderSummary.tsx
 "use client";
 
 import { PromoCodeForm } from "./PromoCodeForm";
@@ -11,28 +10,26 @@ interface OrderSummaryProps {
   grandTotal: number;
 }
 
-export function OrderSummary({ 
-  totalItems, 
-  subtotal, 
-  totalSavings, 
-  grandTotal 
+export function OrderSummary({
+  totalItems,
+  subtotal,
+  totalSavings,
+  grandTotal,
 }: OrderSummaryProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
-      <h2 className="text-lg font-bold text-gray-900 mb-4">
-        Order Summary
-      </h2>
-      
+      <h2 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h2>
+
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">
-            Subtotal ({totalItems} {totalItems === 1 ? 'item' : 'items'})
+            Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"})
           </span>
           <span className="font-medium text-gray-900">
             ৳{subtotal.toLocaleString()}
           </span>
         </div>
-        
+
         {totalSavings > 0 && (
           <div className="flex justify-between text-sm">
             <span className="text-green-600">Total Savings</span>
@@ -41,12 +38,12 @@ export function OrderSummary({
             </span>
           </div>
         )}
-        
+
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Shipping</span>
           <span className="text-green-600 font-medium">Free</span>
         </div>
-        
+
         <div className="border-t border-gray-200 pt-3 mt-3">
           <div className="flex justify-between text-base font-bold">
             <span className="text-gray-900">Total</span>
@@ -54,18 +51,16 @@ export function OrderSummary({
               ৳{grandTotal.toLocaleString()}
             </span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Inclusive of all taxes
-          </p>
+          <p className="text-xs text-gray-500 mt-1">Inclusive of all taxes</p>
         </div>
       </div>
-      
+
       <PromoCodeForm />
-      
+
       <div className="mt-6">
         <CheckoutButton grandTotal={grandTotal} />
       </div>
-      
+
       <div className="mt-6 pt-6 border-t border-gray-200">
         <p className="text-xs text-gray-500 text-center mb-3">
           Secure payment with

@@ -1,7 +1,7 @@
 "use client";
 
 import { useOptimistic, useTransition } from "react";
-import { CartItem } from "@/types";
+import { CartItem } from "@/types/products";
 import { CartItemCard } from "./CartItemCard";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";

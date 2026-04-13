@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Product, Variant } from "@/types";
+import { Product, Variant } from "@/types/products";
 import { useCartStore } from "@/store/useCartStore";
 import { calculateSellingPrice, formatPrice, getStockStatus } from "@/lib/price-utils";
 import { toast } from "sonner";

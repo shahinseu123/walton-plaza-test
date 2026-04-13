@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Trash2, Minus, Plus } from "lucide-react";
-import { CartItem } from "@/types";
+import { CartItem } from "@/types/products";
 import { calculateSellingPrice } from "@/lib/cart-utils";
 
 interface CartItemCardProps {
@@ -12,7 +12,11 @@ interface CartItemCardProps {
   onRemove: (id: string) => void;
 }
 
-export function CartItemCard({ item, onUpdateQuantity, onRemove }: CartItemCardProps) {
+export function CartItemCard({
+  item,
+  onUpdateQuantity,
+  onRemove,
+}: CartItemCardProps) {
   const sellingPrice = calculateSellingPrice(item.variant);
   const itemTotal = sellingPrice * item.quantity;
   const originalTotal = item.variant.mrpPrice * item.quantity;
@@ -56,17 +60,17 @@ export function CartItemCard({ item, onUpdateQuantity, onRemove }: CartItemCardP
               >
                 {item.productName}
               </Link>
-              
+
               <p className="mt-1 text-sm text-gray-500">
                 SKU: {item.variant.posItemCode}
               </p>
-              
+
               {savings > 0 && (
                 <p className="mt-1 text-xs text-green-600">
                   Save ৳{savings.toLocaleString()}
                 </p>
               )}
-              
+
               <button
                 onClick={handleRemove}
                 className="mt-2 text-sm text-red-600 hover:text-red-700 font-medium inline-flex items-center gap-1"
@@ -102,11 +106,11 @@ export function CartItemCard({ item, onUpdateQuantity, onRemove }: CartItemCardP
               >
                 <Minus className="w-4 h-4" />
               </button>
-              
+
               <span className="w-12 text-center font-medium">
                 {item.quantity}
               </span>
-              
+
               <button
                 onClick={handleIncrement}
                 disabled={item.quantity >= maxStock}
@@ -117,7 +121,7 @@ export function CartItemCard({ item, onUpdateQuantity, onRemove }: CartItemCardP
               </button>
             </div>
           </div>
-          
+
           {item.quantity >= maxStock && (
             <p className="text-xs text-orange-600 text-center mt-1">
               Max stock reached

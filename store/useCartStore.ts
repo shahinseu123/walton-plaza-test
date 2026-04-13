@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { Product, Variant, CartItem, CartStore } from '@/types';
+import { Product, Variant, CartItem, CartStore } from '@/types/products';
 import { calculateCartTotals, calculateSellingPrice, getStockStatus } from '@/lib/cart-utils';
 
 const generateCartItemId = (productUid: string, variantCode: string): string => {

@@ -1,5 +1,5 @@
 // lib/cart-utils.ts
-import { Variant, CartItem, CartState } from "@/types";
+import { Variant, CartItem, CartState } from "@/types/products";
 
 export const calculateSellingPrice = (variant: Variant): number => {
   if (!variant.discount) return variant.mrpPrice;

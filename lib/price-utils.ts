@@ -1,5 +1,5 @@
 // lib/price-utils.ts
-import { Variant } from "@/types";
+import { Variant } from "@/types/products";
 
 export function calculateSellingPrice(variant: Variant | null | undefined): number {
   if (!variant) return 0;

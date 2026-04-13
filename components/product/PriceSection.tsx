@@ -1,6 +1,6 @@
 "use client";
 
-import { Variant } from "@/types";
+import { Variant } from "@/types/products";
 import { calculateSellingPrice, calculateDiscountAmount, calculateDiscountPercentage, formatPrice } from "@/lib/price-utils";
 
 interface PriceSectionProps {

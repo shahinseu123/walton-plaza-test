@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { Product } from "@/types";
+import { Product } from "@/types/products";
 import { useCartStore } from "@/store/useCartStore";
 import { calculateSellingPrice, calculateDiscountPercentage, getStockStatus } from "@/lib/cart-utils";
 import { toast } from "sonner";
