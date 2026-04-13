@@ -44,7 +44,7 @@ The application follows a **feature-based, server-first architecture** using Nex
 ├── components/
 │   ├── product/              # Product-related UI components
 │   ├── layout/                   # Reusable UI components
-│   ├── product/                   # Reusable product UI components
+│   ├── cart/                   # Reusable cart UI components
 │   ├── utility/                   # Reusable utility UI components
 │
 ├── graphql/
