@@ -33,29 +33,27 @@ The application follows a **feature-based, server-first architecture** using Nex
 
 # 📁 Project Structure
 
-# 📁 Project Structure
-
 ```txt
-src/
-│
+
 ├── app/                      # App Router routes (Next.js)
-│   ├── products/             # Product Listing Page (PLP)
+│   ├── cart/                 # Cart page
 │   ├── product/[id]/        # Product Details Page (PDP)
 │   ├── layout.tsx
-│   ├── page.tsx
+│   ├── page.tsx             # Product listing page
 │
 ├── components/
 │   ├── product/              # Product-related UI components
-│   ├── ui/                   # Reusable reusable UI components
+│   ├── layout/                   # Reusable UI components
+│   ├── product/                   # Reusable product UI components
+│   ├── utility/                   # Reusable utility UI components
 │
-├── lib/
-│   ├── graphql/              # GraphQL client utilities
-│   ├── fetchGraphQL.ts       # Custom GraphQL fetch wrapper
+├── graphql/
+│   ├── fragment/              # GraphQL client utilities
+│   ├── queries               # Custom GraphQL queries
 │
 ├── store/                    # Cart state management
 ├── hooks/                    # Custom React hooks
 ├── types/                    # Global TypeScript types
-├── config/                   # Environment-based configuration
 
 ---
 
