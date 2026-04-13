@@ -1,4 +1,3 @@
-// components/cart/OrderSummary.tsx
 "use client";
 
 import { PromoCodeForm } from "./PromoCodeForm";
