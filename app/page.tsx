@@ -31,7 +31,7 @@ export default async function Page() {
 
     return (
       <main className="container mx-auto py-8">
-        <div className="flex items-start">
+        <div className="lg:flex lg:items-start">
           <div className="w-1/4 sticky top-24 h-fit">
             <FilterSidebar />
           </div>

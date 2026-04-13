@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { PRODUCT_LISTING_FIELDS } from '../fragments/ProductFragments';
 
 export const GET_PRODUCTS = gql`
   query GetProducts($skip: Int!, $limit: Int!) {
@@ -11,22 +12,10 @@ export const GET_PRODUCTS = gql`
       result {
         count
         products {
-          uid
-          enName
-          images {
-            url
-          }
-          variants {
-            mrpPrice
-            quantity
-            discount {
-              amount
-              value
-              type
-            }
-          }
+          ...ProductListingFields
         }
       }
     }
   }
+  ${PRODUCT_LISTING_FIELDS}
 `;

@@ -1,19 +1,23 @@
-export const PRODUCT_BASIC_FRAGMENT = `
-  fragment ProductBasic on Product {
+import { gql } from '@apollo/client';
+
+// Basic product fields fragment
+export const PRODUCT_BASIC_FIELDS = gql`
+  fragment ProductBasicFields on Product {
     uid
     enName
     images {
       url
     }
   }
-`
+`;
 
-export const PRODUCT_VARIANT_FRAGMENT = `
-  fragment ProductVariant on Variant {
+// Product variant fragment
+export const PRODUCT_VARIANT_FIELDS = gql`
+  fragment ProductVariantFields on ProductVariant {
     mrpPrice
-    quantity
     ebsItemCode
     posItemCode
+    quantity
     discount {
       amount
       value
@@ -22,8 +26,32 @@ export const PRODUCT_VARIANT_FRAGMENT = `
   }
 `;
 
-export const PRODUCT_ATTRIBUTES_FRAGMENT = `
-  fragment ProductAttributes on Product {
+// Complete product fields for listing
+export const PRODUCT_LISTING_FIELDS = gql`
+  fragment ProductListingFields on Product {
+    uid
+    enName
+    images {
+      url
+    }
+    variants {
+      ...ProductVariantFields
+    }
+  }
+  ${PRODUCT_VARIANT_FIELDS}
+`;
+
+// Complete product fields for detail page
+export const PRODUCT_DETAIL_FIELDS = gql`
+  fragment ProductDetailFields on Product {
+    uid
+    enName
+    images {
+      url
+    }
+    variants {
+      ...ProductVariantFields
+    }
     productAttributes {
       enLabel
       values {
@@ -55,14 +83,5 @@ export const PRODUCT_ATTRIBUTES_FRAGMENT = `
       }
     }
   }
+  ${PRODUCT_VARIANT_FIELDS}
 `;
-
-export const PRODUCT_FULL_FRAGMENT = `
-  ${PRODUCT_BASIC_FRAGMENT}
-  ${PRODUCT_ATTRIBUTES_FRAGMENT}
-
-  fragment ProductFull on Product {
-    ...ProductBasic
-    ...ProductAttributes
-  }
-`  

@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { PRODUCT_DETAIL_FIELDS } from '../fragments/ProductFragments';
 
 export const GET_PRODUCT_DETAILS = gql`
   query GetProductDetails($id: String!) {
@@ -10,22 +11,10 @@ export const GET_PRODUCT_DETAILS = gql`
       statusCode
       result {
         products {
-          uid
-          enName
-          images {
-            url
-          }
-          variants {
-            mrpPrice
-            quantity
-            discount {
-              amount
-              value
-              type
-            }
-          }
+          ...ProductDetailFields
         }
       }
     }
   }
+  ${PRODUCT_DETAIL_FIELDS}
 `;
